@@ -146,7 +146,7 @@ public class C2DMReceiver extends BroadcastReceiver {
 
 				String lang = "ja";
 				String tags = "android_device_test";
-				String serveruri = "https://{アプリケーション登録で表示されるサーバ名}/v2/android/devices/";
+				String serveruri = data.sn_server;
 				String token = data.sn_token;
 
 				HttpClient httpCli = new DefaultHttpClient();
