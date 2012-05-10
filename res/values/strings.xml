@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, C2DMTestAppActivity!</string>
+    <string name="app_name">C2DMTestApp</string>
+    <string name="buttontext">send device_id</string>
+
+</resources>
