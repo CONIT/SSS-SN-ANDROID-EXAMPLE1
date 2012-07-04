@@ -35,4 +35,10 @@ public class SNServerResult {
         mCauseException = null;
     }
 
+    @Override
+    public String toString() {
+        return "SNServerResult [mHttpStatus=" + mHttpStatus + ", mResponseString="
+                + mResponseString + ", mCauseException=" + mCauseException + "]";
+    }
+
 }

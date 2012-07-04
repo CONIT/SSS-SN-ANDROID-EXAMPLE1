@@ -27,7 +27,7 @@ Push通知にはGoogle Cloud Messaging for Android (GCM)  を使用していま�
 4.Samurai Notificationに必要な情報をプログラム上に定義します。  
 　GCM sender IDは、src/jp/co/conit/sss/sn/ex1/util/SNApiUtil.java 42行目のSENDER_IDに定義してください。  
 　アクセストークンは、src/jp/co/conit/sss/sn/ex1/util/SNApiUtil.java 44行目のSN_TOKENに定義してください。  
-　サーバーホスト名は、src/jp/co/conit/sss/sn/ex1/util/SNApiUtil.java 46行目のSN_SERVERに記述してあるホスト名に置き換えて下さい。
+　サーバーホスト名は、src/jp/co/conit/sss/sn/ex1/util/SNApiUtil.java 46行目のSN_DOMAINに記述してあるホスト名に置き換えて下さい。
   
 ここまでがSamurai Notificationアプリの改修手順となります。  
 以下は改変したアプリにプッシュ通知を行う手順となります。  

@@ -41,16 +41,20 @@ public final class SNApiUtil {
 
     public static final String SENDER_ID = "123456789012";
 
-    public static final String SN_TOKEN = "1234567890abdefghijklmnopqrstuv1234567890";
+    public static final String SN_TOKEN = "1234567890abcdefghijklmnopqrstu1234567890";
 
-    public static final String SN_SERVER = "https://abcdefg.conit.jp/v2/android/devices/";
+    private static final String SN_DOMAIN = "https://abcdefg.conit.jp/v2/android/";
+
+    private static final String SN_DEVICES = "devices/";
+
+    private static final String SN_UNREGISTER = "unregister/";
 
     private SNApiUtil() {
 
     }
 
     /**
-     * SamuraiNotificationのdevicesAPIに通信します。
+     * SamuraiNotificationのdevicesAPIを使用します。
      * 
      * @param snParam
      * @return
@@ -58,27 +62,52 @@ public final class SNApiUtil {
     public static SNServerResult devices(SNParam snParam) {
 
         SNServerResult result = new SNServerResult();
+        String url = SN_DOMAIN + SN_DEVICES;
+
+        List<NameValuePair> postData = new ArrayList<NameValuePair>();
+        if (!StringUtil.isEmpty(snParam.getLang())) {
+            postData.add(new BasicNameValuePair("lang", snParam.getLang()));
+        }
+        if (!StringUtil.isEmpty(snParam.getTagsStr())) {
+            postData.add(new BasicNameValuePair("tags", snParam.getTagsStr()));
+        }
+        if (!StringUtil.isEmpty(snParam.getMid())) {
+            postData.add(new BasicNameValuePair("mid", snParam.getMid()));
+        }
+
+        postData.add(new BasicNameValuePair("token", snParam.getToken()));
+        postData.add(new BasicNameValuePair("device_token", snParam.getDeviceToken()));
+
+        return post(url, postData, result);
+    }
+
+    /**
+     * SamuraiNotificationのunregisterAPIを使用します。
+     * 
+     * @param devicetoken
+     * @return
+     */
+    public static SNServerResult unregister(String devicetoken) {
+
+        SNServerResult result = new SNServerResult();
+        String url = SN_DOMAIN + SN_UNREGISTER;
+
+        List<NameValuePair> postData = new ArrayList<NameValuePair>();
+        postData.add(new BasicNameValuePair("token", SN_TOKEN));
+        postData.add(new BasicNameValuePair("device_token", devicetoken));
+
+        return post(url, postData, result);
+    }
+
+    private static SNServerResult post(String url, List<NameValuePair> postData,
+            SNServerResult result) {
+
         try {
-
             HttpClient httpCli = new DefaultHttpClient();
-            HttpPost postData = new HttpPost(SN_SERVER);
-            List<NameValuePair> postDataBody = new ArrayList<NameValuePair>();
-            if (!StringUtil.isEmpty(snParam.getLang())) {
-                postDataBody.add(new BasicNameValuePair("lang", snParam.getLang()));
-            }
-            if (!StringUtil.isEmpty(snParam.getTagsStr())) {
-                postDataBody.add(new BasicNameValuePair("tags", snParam.getTagsStr()));
-            }
-            if (!StringUtil.isEmpty(snParam.getMid())) {
-                postDataBody.add(new BasicNameValuePair("mid", snParam.getMid()));
-            }
+            HttpPost post = new HttpPost(url);
+            post.setEntity(new UrlEncodedFormEntity(postData, "utf-8"));
 
-            postDataBody.add(new BasicNameValuePair("token", snParam.getToken()));
-            postDataBody.add(new BasicNameValuePair("device_token", snParam.getDeviceToken()));
-
-            postData.setEntity(new UrlEncodedFormEntity(postDataBody, "utf-8"));
-
-            HttpResponse response = httpCli.execute(postData);
+            HttpResponse response = httpCli.execute(post);
             int status = response.getStatusLine().getStatusCode();
             result.mHttpStatus = status;
 
