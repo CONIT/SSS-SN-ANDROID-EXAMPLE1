@@ -1,0 +1,1 @@
+=========================================Samurai Smartphone Services Samurai Notification Sample Application=========================================これは株式会社コニットが提供するSamurai Notificationを利用したサンプルアプリです。

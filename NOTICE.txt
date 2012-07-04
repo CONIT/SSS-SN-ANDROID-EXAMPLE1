@@ -1,0 +1,1 @@
+=========================================Samurai Smartphone Services Samurai Notification Sample Application=========================================This is a Sample Application that uses the Samurai Notification provided CONIT Co., Ltd.
