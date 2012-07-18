@@ -99,7 +99,7 @@ public class RegistService extends Service {
         protected void onPostExecute(SNServerResult result) {
 
             if (result.mCauseException != null) {
-                Toast.makeText(mContext, mContext.getString(R.string.push_regist_failed),
+                Toast.makeText(mContext, mContext.getString(R.string.push_regist_failed_sn),
                         Toast.LENGTH_LONG).show();
             } else {
                 if (result.mHttpStatus == HttpStatus.SC_OK) {
@@ -107,7 +107,7 @@ public class RegistService extends Service {
                             Toast.LENGTH_LONG).show();
                     saveRegistId(mRegistrationId);
                 } else {
-                    Toast.makeText(mContext, mContext.getString(R.string.push_regist_failed),
+                    Toast.makeText(mContext, mContext.getString(R.string.push_regist_failed_sn),
                             Toast.LENGTH_LONG).show();
                 }
             }

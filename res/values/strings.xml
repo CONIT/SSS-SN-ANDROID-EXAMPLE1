@@ -27,7 +27,8 @@
     <string name="female">女性</string>
     <string name="mid_sendserver_failed">MIDをSamuraiNotificationServerへ送信できませんでした。</string>
     <string name="mid_send_server_succeeded">MIDをSamuraiNotificationServerへ送信しました。</string>
-    <string name="push_regist_failed">プッシュ通知の登録に失敗しました。</string>
+    <string name="push_regist_failed_gcm">GCMへの端末登録に失敗しました。</string>
+    <string name="push_regist_failed_sn">SamuraiNotificationServerへのデバイストークンの登録に失敗しました。</string>
     <string name="push_regist_succeeded">プッシュ通知の登録に成功しました。</string>
     <string name="push_unregist_succeeded">プッシュ通知を無効にしました。</string>
     <string name="push_unregist_failed">プッシュ通知の無効に失敗しました。</string>

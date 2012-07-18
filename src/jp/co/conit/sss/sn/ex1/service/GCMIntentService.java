@@ -16,6 +16,9 @@
 
 package jp.co.conit.sss.sn.ex1.service;
 
+import static jp.co.conit.sss.sn.ex1.service.RedrawService.REGIST_FAILD_GCM;
+import static jp.co.conit.sss.sn.ex1.service.RedrawService.UNREGIST_FAILD;
+import static jp.co.conit.sss.sn.ex1.service.RedrawService.UNREGIST_SUCCCEEDED;
 import static jp.co.conit.sss.sn.ex1.util.SNApiUtil.SENDER_ID;
 import jp.co.conit.sss.sn.ex1.R;
 import jp.co.conit.sss.sn.ex1.activity.SettingsActivity;
@@ -27,7 +30,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gcm.GCMBaseIntentService;
 
@@ -45,12 +47,13 @@ public class GCMIntentService extends GCMBaseIntentService {
     @Override
     protected void onError(Context context, String errorId) {
         String registId = PrefrerencesUtil.getString(context, "registration_id", "");
+
         if (StringUtil.isEmpty(registId)) {
-            Toast.makeText(context, R.string.push_regist_failed, Toast.LENGTH_SHORT).show();
+            startRedrawService(context,REGIST_FAILD_GCM);
         } else {
-            Toast.makeText(context, R.string.push_unregist_failed, Toast.LENGTH_SHORT).show();
+            startRedrawService(context,UNREGIST_FAILD);
         }
-        ResponseHandler.registedResponse();
+
     }
 
     @Override
@@ -94,14 +97,25 @@ public class GCMIntentService extends GCMBaseIntentService {
 
     @Override
     protected void onUnregistered(Context context, String registrationId) {
-        Intent intentService = new Intent();
-        intentService.setClass(context, UnRegistService.class);
-        context.startService(intentService);
+        PrefrerencesUtil.setString(getApplicationContext(), "regist_id", "");
+        startRedrawService(context,UNREGIST_SUCCCEEDED);
     }
 
     @Override
     protected boolean onRecoverableError(Context context, String errorId) {
         Log.d(TAG, "errorId:" + errorId);
         return super.onRecoverableError(context, errorId);
+    }
+
+    /**
+     * アプリ画面を再描画するサービスを起動します。
+     * 
+     * @param context
+     */
+    private void startRedrawService(Context context, int result) {
+        Intent intentService = new Intent();
+        intentService.setClass(context, RedrawService.class);
+        intentService.putExtra("result_type", result);
+        context.startService(intentService);
     }
 }

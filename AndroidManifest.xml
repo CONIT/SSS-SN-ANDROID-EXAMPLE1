@@ -52,7 +52,7 @@
 
         <service android:name=".service.SendMessageIdIntentService" />
         <service android:name=".service.RegistService" />
-        <service android:name=".service.UnRegistService" />
+        <service android:name=".service.RedrawService" />
         <service android:name=".service.GCMIntentService" />
 
         <receiver
