@@ -35,6 +35,10 @@ public class RedrawService extends Service {
     public static final int UNREGIST_FAILD = 2;
 
     public static final int UNREGIST_SUCCCEEDED = 3;
+    
+    public static final int MID_SEND_SERVER_SUCCCEEDED = 4;
+    
+    public static final int MID_SEND_SERVER_FAILD = 5;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -73,6 +77,13 @@ public class RedrawService extends Service {
             case UNREGIST_SUCCCEEDED:
                 stringId = R.string.push_unregist_succeeded;
                 break;
+            case MID_SEND_SERVER_SUCCCEEDED:
+                stringId = R.string.mid_send_server_succeeded;
+                break;
+            case MID_SEND_SERVER_FAILD:
+                stringId = R.string.mid_sendserver_failed;
+                break;
+
             default:
                 return;
         }

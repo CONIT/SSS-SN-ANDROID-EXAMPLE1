@@ -16,9 +16,11 @@
 
 package jp.co.conit.sss.sn.ex1.service;
 
-import jp.co.conit.sss.sn.ex1.R;
+import static jp.co.conit.sss.sn.ex1.service.RedrawService.MID_SEND_SERVER_FAILD;
+import static jp.co.conit.sss.sn.ex1.service.RedrawService.MID_SEND_SERVER_SUCCCEEDED;
 import jp.co.conit.sss.sn.ex1.entity.SNParam;
 import jp.co.conit.sss.sn.ex1.entity.SNServerResult;
+import jp.co.conit.sss.sn.ex1.util.IntentUtil;
 import jp.co.conit.sss.sn.ex1.util.SNApiUtil;
 import jp.co.conit.sss.sn.ex1.util.StringUtil;
 
@@ -29,7 +31,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
 
 /**
  * メッセージIDをSamuraiNotificationServerへ送信するServiceです。<br>
@@ -75,15 +76,12 @@ public class SendMessageIdIntentService extends IntentService {
         SNServerResult result = SNApiUtil.devices(param);
 
         if (result.mCauseException != null) {
-            Toast.makeText(getApplicationContext(), R.string.mid_sendserver_failed,
-                    Toast.LENGTH_LONG).show();
+            IntentUtil.startRedrawService(getApplicationContext(), MID_SEND_SERVER_FAILD);
         } else {
             if (result.mHttpStatus == HttpStatus.SC_OK) {
-                Toast.makeText(getApplicationContext(), R.string.mid_send_server_succeeded,
-                        Toast.LENGTH_LONG).show();
+                IntentUtil.startRedrawService(getApplicationContext(), MID_SEND_SERVER_SUCCCEEDED);
             } else {
-                Toast.makeText(getApplicationContext(), R.string.mid_sendserver_failed,
-                        Toast.LENGTH_LONG).show();
+                IntentUtil.startRedrawService(getApplicationContext(), MID_SEND_SERVER_FAILD);
             }
         }
     }

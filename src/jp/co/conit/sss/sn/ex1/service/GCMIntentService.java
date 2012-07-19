@@ -22,6 +22,7 @@ import static jp.co.conit.sss.sn.ex1.service.RedrawService.UNREGIST_SUCCCEEDED;
 import static jp.co.conit.sss.sn.ex1.util.SNApiUtil.SENDER_ID;
 import jp.co.conit.sss.sn.ex1.R;
 import jp.co.conit.sss.sn.ex1.activity.SettingsActivity;
+import jp.co.conit.sss.sn.ex1.util.IntentUtil;
 import jp.co.conit.sss.sn.ex1.util.PrefrerencesUtil;
 import jp.co.conit.sss.sn.ex1.util.StringUtil;
 import android.app.Notification;
@@ -49,9 +50,9 @@ public class GCMIntentService extends GCMBaseIntentService {
         String registId = PrefrerencesUtil.getString(context, "registration_id", "");
 
         if (StringUtil.isEmpty(registId)) {
-            startRedrawService(context,REGIST_FAILD_GCM);
+            IntentUtil.startRedrawService(context, REGIST_FAILD_GCM);
         } else {
-            startRedrawService(context,UNREGIST_FAILD);
+            IntentUtil.startRedrawService(context, UNREGIST_FAILD);
         }
 
     }
@@ -98,7 +99,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     @Override
     protected void onUnregistered(Context context, String registrationId) {
         PrefrerencesUtil.setString(getApplicationContext(), "regist_id", "");
-        startRedrawService(context,UNREGIST_SUCCCEEDED);
+        IntentUtil.startRedrawService(context, UNREGIST_SUCCCEEDED);
     }
 
     @Override
@@ -107,15 +108,4 @@ public class GCMIntentService extends GCMBaseIntentService {
         return super.onRecoverableError(context, errorId);
     }
 
-    /**
-     * アプリ画面を再描画するサービスを起動します。
-     * 
-     * @param context
-     */
-    private void startRedrawService(Context context, int result) {
-        Intent intentService = new Intent();
-        intentService.setClass(context, RedrawService.class);
-        intentService.putExtra("result_type", result);
-        context.startService(intentService);
-    }
 }
